@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#020c1b">
+<title>OILBTC Calculator</title>
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiT0lMQlRDIENhbGN1bGF0b3IiLCJzaG9ydF9uYW1lIjoiT0lMQlRDIiwiZGVzY3JpcHRpb24iOiJDYWxjdWxhZG9yYSBkZSBwb3NpY2lvbmVzIE9JTC1CVEMgUGVycGV0dW9zIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwMjBjMWIiLCJ0aGVtZV9jb2xvciI6IiMwMjBjMWIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjggMTI4JyUzRSUzQ3JlY3Qgd2lkdGg9JzEyOCcgaGVpZ2h0PScxMjgnIHJ4PScyMCcgZmlsbD0nJTIzMGExOTJmJy8lM0UlM0N0ZXh0IHg9JzY0JyB5PSc3OCcgZm9udC1zaXplPSc1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZmlsbD0nJTIzNjRmZmRhJyUzRSVFMiU5QSVBMSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTI4eDEyOCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020c1b;--card:#0a192f;--input-bg:#112240;--border:#1e3a5f;--text:#ccd6f6;--text-dim:#8892b0;--text-dark:#495670;--accent:#64ffda;--green:#00ff88;--red:#ff4444;--yellow:#ffd700;--orange:#ff6600;--edit:#e8a317;--edit-glow:rgba(232,163,23,.25);--font:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:1}
+input[type=range]{-webkit-appearance:none;height:6px;border-radius:3px;background:#1e3a5f;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid var(--accent);background:var(--card)}
+.container{max-width:720px;margin:0 auto;padding:16px 12px}
+.card{background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:12px;animation:fadeIn .3s ease both}
+.ct{font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:10px;text-transform:uppercase}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}.ga{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+.field label{font-size:10px;color:var(--text-dim);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:3px}
+.iw{display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--border);border-radius:6px;padding:6px 10px}
+.iw.ed{border:2px solid var(--edit);box-shadow:0 0 8px var(--edit-glow);animation:pulseGlow 2.5s ease-in-out infinite}
+.field input{background:transparent;border:none;color:var(--accent);font-size:15px;font-family:var(--font);width:100%;outline:none}
+.sf{color:var(--text-dark);font-size:11px;margin-left:4px;white-space:nowrap}
+.sub{font-size:9px;color:var(--text-dark);margin-top:2px}
+.et{font-size:8px;color:var(--edit);letter-spacing:.5px;margin-left:4px}
+.bg{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+.bn{padding:10px 32px;border-radius:8px;border:2px solid var(--border);cursor:pointer;font-family:var(--font);font-size:14px;font-weight:700;letter-spacing:1px;background:transparent;color:var(--text-dark);transition:all .15s}
+.bn.long.a{border-color:var(--green);background:rgba(0,255,136,.12);color:var(--green)}
+.bn.short.a{border-color:var(--red);background:rgba(255,68,68,.12);color:var(--red)}
+.bs{padding:4px 12px;border-radius:4px;border:1px solid var(--border);cursor:pointer;font-family:var(--font);font-size:10px;background:transparent;color:var(--text-dark);transition:all .15s}
+.bs.a{border-color:var(--accent);background:rgba(100,255,218,.1);color:var(--accent)}
+.ib{display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--input-bg);border-radius:6px;padding:8px}
+.row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0d1b30;font-size:12px;flex-wrap:wrap}.row:last-child{border-bottom:none}
+.pc{border-radius:10px;padding:16px;border:1px solid}.pc.tp{background:rgba(0,255,136,.04);border-color:rgba(0,255,136,.2)}.pc.sl{background:rgba(255,68,68,.04);border-color:rgba(255,68,68,.2)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{padding:7px 4px;color:var(--text-dim);text-align:right;white-space:nowrap;font-weight:400;font-size:10px;border-bottom:2px solid var(--border)}
+td{padding:5px 4px;text-align:right;border-bottom:1px solid #0d1b30}
+tr.ac{background:rgba(100,255,218,.08)}
+.st{font-size:9px;padding:3px 8px;border-radius:4px;display:inline-flex;align-items:center;gap:4px}
+.st.ok{color:var(--green);background:rgba(0,255,136,.08)}.st.off{color:var(--text-dark);background:rgba(255,255,255,.03)}.st.err{color:var(--red);background:rgba(255,68,68,.08)}
+.rb{background:none;border:1px solid var(--border);color:var(--accent);font-family:var(--font);font-size:10px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .15s}.rb:hover{background:rgba(100,255,218,.1)}.rb:disabled{opacity:.4;cursor:not-allowed}
+.lg{display:flex;gap:12px;align-items:center;margin-bottom:14px;justify-content:center;flex-wrap:wrap}
+.li{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--text-dim)}
+.ls{width:14px;height:14px;border-radius:3px}
+.footer{text-align:center;font-size:9px;color:var(--border);margin-top:14px;letter-spacing:1px}
+@media(max-width:500px){.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.bn{padding:10px 20px;font-size:12px}table{font-size:10px}th,td{padding:4px 3px}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}.spinning{animation:spin .6s linear infinite;display:inline-block}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 6px var(--edit-glow)}50%{box-shadow:0 0 14px var(--edit-glow),0 0 22px rgba(232,163,23,.08)}}
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+const S=1e8,BBL=10;
+const st={satsPerUSD:0,btcPrice:0,entry:0,sl:0,tp:0,margin:0,leverage:1,dir:1,feeType:'taker',fundingRate:0,fundingPeriods:1,apiStatus:'idle',apiTime:null,fetching:false};
+function san(s){return Number(String(s).replace(/,/g,''))||0}
+function fmt(n,d=0){if(!isFinite(n))return'—';return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fU(n){if(!isFinite(n)||isNaN(n))return'$0.00';return'$'+fmt(n,2)}
+function fUs(n){if(!isFinite(n)||isNaN(n))return'$0.00';return(n<0?'-':n>0?'+':'')+fU(Math.abs(n))}
+function fP(n){if(!isFinite(n))return'0';return(n>0?'+':'')+fmt(n)}
+function pct(n){if(!isFinite(n)||isNaN(n))return'0.00%';return(n*100).toFixed(2)+'%'}
+function s2u(s){return st.satsPerUSD?s/st.satsPerUSD:0}
+function clr(v){return v>=0?'var(--green)':'var(--red)'}
+function lC(l){return l>=8?'var(--red)':l>=5?'var(--yellow)':'var(--accent)'}
+function tA(t){if(!t)return'';const s=Math.floor((Date.now()-t)/1000);if(s<60)return`hace ${s}s`;if(s<3600)return`hace ${Math.floor(s/60)}m`;return`hace ${Math.floor(s/3600)}h`}
+async function fetchBTC(){st.fetching=true;render();try{const r=await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');const d=await r.json();const p=parseFloat(d.price);if(p>0){st.btcPrice=+p.toFixed(2);st.satsPerUSD=Math.round(S/p);st.apiStatus='ok';st.apiTime=Date.now()}}catch(e){st.apiStatus='err'}st.fetching=false;render()}
+function calc(){const{entry:e,sl,tp,margin:m,leverage:l,dir:d,feeType:ft,fundingRate:fr,fundingPeriods:fp}=st;const fee=ft==='taker'?.00075:.00025,fd=fr/100;const pos=m*l,c=e>0?pos/e:0,mU=s2u(m),pU=mU*l;const fE=pos*fee,fTP=c*tp*fee,fSL=c*sl*fee,tFTP=fE+fTP,tFSL=fE+fSL;const fPer=-d*fd*pos,fTot=fPer*fp;const pTP=(tp-e)*d*c-tFTP+fTot,pSL=(sl-e)*d*c-tFSL+fTot;const rTP=m?pTP/m:0,rSL=m?pSL/m:0,rr=pSL?Math.abs(pTP/pSL):0;const liq=l>0?e-(e/l)*d:0,liqD=e?Math.abs((liq-e)/e):0;return{pos,pU,c,mU,tFTP,tFSL,fPer,fTot,pTP,pSL,rTP,rSL,rr,liq,liqD,pTPu:s2u(pTP),pSLu:s2u(pSL)}}
+function levT(){const{entry:e,sl,tp,margin:m,dir:d,feeType:ft,fundingRate:fr,fundingPeriods:fp}=st;const fee=ft==='taker'?.00075:.00025,fd=fr/100;return Array.from({length:10},(_,i)=>{const l=i+1,pos=m*l,c=e>0?pos/e:0,pU=s2u(m)*l;const fE=pos*fee,fTP=c*tp*fee,fSL=c*sl*fee,fnd=-d*fd*pos*fp;const pTP=(tp-e)*d*c-(fE+fTP)+fnd,pSL=(sl-e)*d*c-(fE+fSL)+fnd;const rTP=m?pTP/m:0,rSL=m?pSL/m:0,liq=e-(e/l)*d;return{l,pU,pTP,pSL,rTP,rSL,liq,pTPu:s2u(pTP),pSLu:s2u(pSL)}})}
+function sF(lb,key,val,sub){return`<div class="field"><label>${lb} (sats) <span class="et">✎ MANUAL</span></label><div class="iw ed"><input type="text" inputmode="numeric" value="${val===0?'':fmt(val)}" placeholder="Pegar acá" data-sats="${key}" onchange="st['${key}']=san(this.value);render()" onfocus="this.value='${val||''}';this.select()" onblur="this.value=san(this.value)?fmt(san(this.value)):''"><span class="sf">sats</span></div><div class="sub">${sub}</div></div>`}
+function eN(lb,key,val,sf,step,sub,ex){return`<div class="field"><label>${lb} <span class="et">✎ MANUAL</span></label><div class="iw ed"><input type="number" value="${val}" onchange="st['${key}']=+this.value;${ex||''}render()" step="${step}"><span class="sf">${sf}</span></div>${sub?`<div class="sub">${sub}</div>`:''}</div>`}
+function render(){const c=calc(),lt=levT(),isL=st.dir===1,oilBbl=s2u(st.entry)/BBL,mU=s2u(st.margin);
+const fLbl=st.fundingRate>0?(isL?'Pagás':'Cobrás'):st.fundingRate<0?(isL?'Cobrás':'Pagás'):'Neutro';
+const fClr=(st.fundingRate>0&&isL)||(st.fundingRate<0&&!isL)?'var(--red)':st.fundingRate===0?'var(--text-dark)':'var(--green)';
+const sC=st.apiStatus==='ok'?'ok':st.apiStatus==='err'?'err':'off';
+const sT=st.apiStatus==='ok'?`● LIVE ${tA(st.apiTime)}`:st.apiStatus==='err'?'● ERROR':'● OFFLINE';
+document.getElementById('app').innerHTML=`
+<div style="text-align:center;margin-bottom:18px">
+<div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:4px">PERPETUAL CONTRACT</div>
+<div style="font-size:26px;font-weight:700;color:#e6f1ff;letter-spacing:1px">⚡ OIL / BTC</div>
+<div style="font-size:11px;color:var(--text-dark);margin-top:4px">WTI Crude Oil — 10 bbl/contrato — Satoshis</div>
+</div>
+<div class="lg">
+<div class="li"><div class="ls" style="border:2px solid var(--edit);background:var(--edit-glow)"></div>✎ Input manual</div>
+<div class="li"><div class="ls" style="border:1px solid var(--border);background:var(--input-bg)"></div>Auto / calculado</div>
+</div>
+<div class="bg">
+<button class="bn long ${isL?'a':''}" onclick="st.dir=1;render()">LONG ▲</button>
+<button class="bn short ${!isL?'a':''}" onclick="st.dir=-1;render()">SHORT ▼</button>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<span class="ct" style="margin-bottom:0">COTIZACIÓN</span>
+<div style="display:flex;align-items:center;gap:8px">
+<span class="st ${sC}">${sT}</span>
+<button class="rb" onclick="fetchBTC()" ${st.fetching?'disabled':''}>${st.fetching?'<span class="spinning">↻</span>':'↻ BTC'}</button>
+</div>
+</div>
+<div class="grid g3">
+${eN('⭐ Sats por USD','satsPerUSD',st.satsPerUSD,'sats/$1',1,'Pegá de Roxom o auto via BTC',`st.btcPrice=st.satsPerUSD>0?+(S/st.satsPerUSD).toFixed(2):0;`)}
+<div class="field"><label>Precio BTC (USD)</label><div class="iw"><input type="number" value="${st.btcPrice}" onchange="st.btcPrice=+this.value;st.satsPerUSD=this.value>0?Math.round(S/this.value):0;render()" step="100"><span class="sf">USD</span></div><div class="sub">Auto via Binance</div></div>
+<div class="ib"><div style="font-size:10px;color:var(--text-dim);margin-bottom:2px">WTI / barril</div><div style="font-size:20px;font-weight:700;color:#e6f1ff">${fU(oilBbl)}</div><div style="font-size:9px;color:var(--text-dark);margin-top:2px">contrato = ${fU(oilBbl*10)} (10 bbl)</div></div>
+</div>
+</div>
+<div class="card">
+<div class="ct">TRADE</div>
+<div style="font-size:9px;color:var(--text-dark);margin-bottom:10px">Pegá directo desde Roxom — las comas se limpian solas</div>
+<div class="grid ga">
+${sF('Entrada','entry',st.entry,`≈ ${fU(s2u(st.entry))} (${fU(s2u(st.entry)/BBL)}/bbl)`)}
+${sF('Stop Loss','sl',st.sl,`≈ ${fU(s2u(st.sl))} (${fU(s2u(st.sl)/BBL)}/bbl)`)}
+${sF('Take Profit','tp',st.tp,`≈ ${fU(s2u(st.tp))} (${fU(s2u(st.tp)/BBL)}/bbl)`)}
+${sF('Tu margen','margin',st.margin,`≈ ${fU(mU)}`)}
+</div>
+<div style="margin-top:16px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+<span style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px">Leverage</span>
+<div style="text-align:right"><span style="font-size:20px;font-weight:700;color:${lC(st.leverage)}">×${st.leverage}</span><div style="font-size:10px;color:var(--text-dark)">Posición: ${fU(mU*st.leverage)}</div></div>
+</div>
+<input type="range" min="1" max="10" value="${st.leverage}" oninput="st.leverage=+this.value;render()" style="width:100%;accent-color:${lC(st.leverage)}">
+<div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-dark)"><span>×1</span><span>×5</span><span>×10</span></div>
+</div>
+<div style="margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+<span style="font-size:10px;color:var(--text-dim)">FEE:</span>
+<button class="bs ${st.feeType==='taker'?'a':''}" onclick="st.feeType='taker';render()">Taker 0.075%</button>
+<button class="bs ${st.feeType==='maker'?'a':''}" onclick="st.feeType='maker';render()">Maker 0.025%</button>
+</div>
+</div>
+<div class="card">
+<div class="ct">FUNDING RATE</div>
+<div class="grid g3">
+${eN('Funding Rate (%)','fundingRate',st.fundingRate,'%',0.01,'')}
+${eN('Periodos','fundingPeriods',st.fundingPeriods,'',1,'Cobros/pagos estimados')}
+<div class="ib"><div style="font-size:10px;color:var(--text-dim);margin-bottom:2px">Por periodo</div><div style="font-size:14px;font-weight:700;color:${fClr}">${fLbl}</div><div style="font-size:13px;font-weight:700;color:${fClr}">${fP(Math.round(c.fPer))} sats</div><div style="font-size:9px;color:var(--text-dark);margin-top:2px">${fUs(s2u(c.fPer))}</div></div>
+</div>
+${st.fundingPeriods>1?`<div style="margin-top:8px;padding:6px 10px;background:#0d1b30;border-radius:6px;font-size:11px;display:flex;justify-content:space-between"><span style="color:var(--text-dim)">Total ${st.fundingPeriods}p:</span><span style="color:${fClr};font-weight:700">${fP(Math.round(c.fTot))} sats (${fUs(s2u(c.fTot))})</span></div>`:''}
+<div style="margin-top:6px;font-size:9px;color:var(--text-dark)">+ positivo → longs pagan, shorts cobran | − negativo → shorts pagan, longs cobran</div>
+</div>
+<div class="card">
+<div class="ct">RESUMEN DE POSICIÓN</div>
+<div class="row"><span style="color:var(--text-dim)">Tu margen</span><span>${fmt(st.margin)} sats <span style="color:var(--text-dark)">(${fU(mU)})</span></span></div>
+<div class="row"><span style="color:var(--text-dim)">Posición total (×${st.leverage})</span><span style="color:#e6f1ff;font-weight:700">${fmt(c.pos)} sats <span style="color:var(--text-dark)">(${fU(c.pU)})</span></span></div>
+<div class="row"><span style="color:var(--text-dim)">Contratos equiv.</span><span>${c.c.toFixed(4)}</span></div>
+<div class="row"><span style="color:var(--text-dim)">Fees (TP)</span><span>${fmt(Math.round(c.tFTP))} sats <span style="color:var(--text-dark)">(${fU(s2u(c.tFTP))})</span></span></div>
+<div class="row"><span style="color:var(--text-dim)">Fees (SL)</span><span>${fmt(Math.round(c.tFSL))} sats <span style="color:var(--text-dark)">(${fU(s2u(c.tFSL))})</span></span></div>
+<div class="row"><span style="color:var(--text-dim)">Funding (${st.fundingPeriods}p)</span><span style="color:${fClr}">${fP(Math.round(c.fTot))} sats <span style="color:var(--text-dark)">(${fUs(s2u(c.fTot))})</span></span></div>
+</div>
+<div class="grid g2" style="margin-bottom:12px">
+<div class="pc tp"><div style="font-size:11px;color:var(--green);font-weight:700;margin-bottom:8px">🟢 TAKE PROFIT</div><div style="font-size:20px;font-weight:700;color:${clr(c.pTP)}">${fP(Math.round(c.pTP))} <span style="font-size:10px;color:var(--text-dark)">sats</span></div><div style="font-size:16px;color:${clr(c.pTP)};margin-top:2px">${fUs(c.pTPu)}</div><div style="margin-top:6px;font-size:11px;color:var(--text-dim)">ROI: <span style="color:${clr(c.rTP)};font-weight:700">${pct(c.rTP)}</span></div></div>
+<div class="pc sl"><div style="font-size:11px;color:var(--red);font-weight:700;margin-bottom:8px">🔴 STOP LOSS</div><div style="font-size:20px;font-weight:700;color:${clr(c.pSL)}">${fP(Math.round(c.pSL))} <span style="font-size:10px;color:var(--text-dark)">sats</span></div><div style="font-size:16px;color:${clr(c.pSL)};margin-top:2px">${fUs(c.pSLu)}</div><div style="margin-top:6px;font-size:11px;color:var(--text-dim)">ROI: <span style="color:${clr(c.rSL)};font-weight:700">${pct(c.rSL)}</span></div></div>
+</div>
+<div class="grid g2" style="margin-bottom:14px">
+<div class="card" style="text-align:center;margin-bottom:0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">RIESGO / RECOMPENSA</div><div style="font-size:28px;font-weight:700;color:${c.rr>=2?'var(--green)':c.rr>=1?'var(--yellow)':'var(--red)'}">${c.rr.toFixed(2)}</div></div>
+<div class="card" style="text-align:center;margin-bottom:0;border-color:var(--orange)"><div style="font-size:10px;color:var(--orange);margin-bottom:4px">⚠ LIQ. PRICE</div><div style="font-size:18px;font-weight:700;color:var(--orange)">${fmt(c.liq)} <span style="font-size:10px">sats</span></div><div style="font-size:10px;color:var(--text-dark);margin-top:2px">${fU(s2u(c.liq)/BBL)}/bbl | Dist: ${pct(c.liqD)}</div></div>
+</div>
+<div class="card" style="overflow-x:auto">
+<div style="font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:4px">COMPARATIVA POR LEVERAGE — margen fijo: ${fmt(st.margin)} sats (${fU(mU)})</div>
+<div style="font-size:9px;color:var(--text-dark);margin-bottom:10px">Tu capital × leverage = posición. Funding incluido (${st.fundingPeriods}p).</div>
+<table><thead><tr>${['Lev','Pos $','P&L TP','TP $','P&L SL','SL $','ROI TP','ROI SL','Liq'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+<tbody>${lt.map(r=>`<tr class="${r.l===st.leverage?'ac':''}"><td style="color:#e6f1ff;font-weight:700;text-align:center">×${r.l}</td><td style="color:var(--text)">${fU(r.pU)}</td><td style="color:${clr(r.pTP)}">${fP(Math.round(r.pTP))}</td><td style="color:${clr(r.pTP)}">${fUs(r.pTPu)}</td><td style="color:${clr(r.pSL)}">${fP(Math.round(r.pSL))}</td><td style="color:${clr(r.pSL)}">${fUs(r.pSLu)}</td><td style="font-weight:700;color:${clr(r.rTP)}">${pct(r.rTP)}</td><td style="font-weight:700;color:${clr(r.rSL)}">${pct(r.rSL)}</td><td style="color:var(--orange)">${fmt(r.liq)}</td></tr>`).join('')}</tbody></table>
+</div>
+<div class="footer">OILBTC PERP CALCULATOR v7 PWA — 10 bbl/contrato — BTC via Binance API — 0 datos sensibles</div>`;
+document.querySelectorAll('[data-sats]').forEach(el=>{el.addEventListener('paste',function(ev){ev.preventDefault();st[this.dataset.sats]=san(ev.clipboardData.getData('text'));render()});el.addEventListener('focus',function(){this.select()})})}
+render();fetchBTC();setInterval(fetchBTC,60000);
+if('serviceWorker' in navigator){const sw=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>e.respondWith(fetch(e.request).catch(()=>caches.match(e.request))));`;navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{})}
+</script>
+</body>
+</html>
