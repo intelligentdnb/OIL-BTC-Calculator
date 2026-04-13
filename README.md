@@ -35,19 +35,6 @@ Calculadora de posiciones para el contrato perpetuo **OIL-BTC** (WTI Crude Oil d
 **iPhone:**
 - Safari → Compartir → "Agregar a inicio"
 
-## GitHub Pages
-
-Si querés hostear online:
-1. Settings → Pages → Source: main / root
-2. Tu app queda en `https://tu-usuario.github.io/oilbtc-calculator/`
-
-## Datos y privacidad
-
-- **Cero datos sensibles** en el código
-- No se guardan ni envían datos de trading
-- Única conexión externa: Binance API pública (precio BTC/USDT)
-- Los valores que ingresás viven solo en memoria del navegador
-- Al cerrar se borran
 
 ## Contrato OIL-BTC
 
@@ -59,5 +46,4 @@ Si querés hostear online:
 | Denominación | BTC (Satoshis) |
 | Max Leverage | 10× |
 | Funding | Cada 8h (00:00, 08:00, 16:00 UTC) |
-| Fee Taker | 0.075% |
-| Fee Maker | 0.025% |
+| BINANCE API |
