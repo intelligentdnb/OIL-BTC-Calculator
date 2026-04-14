@@ -6,10 +6,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#020c1b">
-<title>OIL-BTC Calculator</title>
+<title>OILBTC Calculator</title>
 <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiT0lMQlRDIENhbGN1bGF0b3IiLCJzaG9ydF9uYW1lIjoiT0lMQlRDIiwiZGVzY3JpcHRpb24iOiJDYWxjdWxhZG9yYSBkZSBwb3NpY2lvbmVzIE9JTC1CVEMgUGVycGV0dW9zIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwMjBjMWIiLCJ0aGVtZV9jb2xvciI6IiMwMjBjMWIiLCJpY29ucyI6W3sic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMjggMTI4JyUzRSUzQ3JlY3Qgd2lkdGg9JzEyOCcgaGVpZ2h0PScxMjgnIHJ4PScyMCcgZmlsbD0nJTIzMGExOTJmJy8lM0UlM0N0ZXh0IHg9JzY0JyB5PSc3OCcgZm9udC1zaXplPSc1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZmlsbD0nJTIzNjRmZmRhJyUzRSVFMiU5QSVBMSUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTI4eDEyOCIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="./favicon.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#020c1b;--card:#0a192f;--input-bg:#112240;--border:#1e3a5f;--text:#ccd6f6;--text-dim:#8892b0;--text-dark:#495670;--accent:#64ffda;--green:#00ff88;--red:#ff4444;--yellow:#ffd700;--orange:#ff6600;--edit:#e8a317;--edit-glow:rgba(232,163,23,.25);--font:'JetBrains Mono',monospace}
@@ -41,12 +40,24 @@ table{width:100%;border-collapse:collapse;font-size:11px}
 th{padding:7px 4px;color:var(--text-dim);text-align:right;white-space:nowrap;font-weight:400;font-size:10px;border-bottom:2px solid var(--border)}
 td{padding:5px 4px;text-align:right;border-bottom:1px solid #0d1b30}
 tr.ac{background:rgba(100,255,218,.08)}
+tr.best{background:rgba(0,255,136,.06)}
 .st{font-size:9px;padding:3px 8px;border-radius:4px;display:inline-flex;align-items:center;gap:4px}
 .st.ok{color:var(--green);background:rgba(0,255,136,.08)}.st.off{color:var(--text-dark);background:rgba(255,255,255,.03)}.st.err{color:var(--red);background:rgba(255,68,68,.08)}
 .rb{background:none;border:1px solid var(--border);color:var(--accent);font-family:var(--font);font-size:10px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .15s}.rb:hover{background:rgba(100,255,218,.1)}.rb:disabled{opacity:.4;cursor:not-allowed}
 .lg{display:flex;gap:12px;align-items:center;margin-bottom:14px;justify-content:center;flex-wrap:wrap}
 .li{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--text-dim)}
 .ls{width:14px;height:14px;border-radius:3px}
+.save-btn{padding:8px 20px;border-radius:8px;border:2px solid var(--accent);cursor:pointer;font-family:var(--font);font-size:12px;font-weight:700;background:rgba(100,255,218,.08);color:var(--accent);transition:all .15s;letter-spacing:.5px}
+.save-btn:hover{background:rgba(100,255,218,.2)}
+.save-btn:disabled{opacity:.3;cursor:not-allowed}
+.del-btn{background:none;border:1px solid rgba(255,68,68,.3);color:var(--red);font-family:var(--font);font-size:9px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all .15s}
+.del-btn:hover{background:rgba(255,68,68,.15)}
+.load-btn{background:none;border:1px solid rgba(100,255,218,.3);color:var(--accent);font-family:var(--font);font-size:9px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all .15s}
+.load-btn:hover{background:rgba(100,255,218,.15)}
+.clear-all{background:none;border:1px solid rgba(255,68,68,.3);color:var(--red);font-family:var(--font);font-size:10px;padding:4px 14px;border-radius:4px;cursor:pointer}
+.badge{display:inline-block;font-size:8px;padding:1px 5px;border-radius:3px;font-weight:700;margin-left:4px}
+.badge.best-rr{background:rgba(0,255,136,.15);color:var(--green)}
+.badge.best-roi{background:rgba(100,255,218,.15);color:var(--accent)}
 .footer{text-align:center;font-size:9px;color:var(--border);margin-top:14px;letter-spacing:1px}
 @media(max-width:500px){.g3{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}.bn{padding:10px 20px;font-size:12px}table{font-size:10px}th,td{padding:4px 3px}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -59,6 +70,11 @@ tr.ac{background:rgba(100,255,218,.08)}
 <script>
 const S=1e8,BBL=10;
 const st={satsPerUSD:0,btcPrice:0,entry:0,sl:0,tp:0,margin:0,leverage:1,dir:1,feeType:'taker',fundingRate:0,fundingPeriods:1,apiStatus:'idle',apiTime:null,fetching:false};
+
+// Scenarios
+let scenarios=JSON.parse(localStorage.getItem('oilbtc_scenarios')||'[]');
+function saveScenarios(){localStorage.setItem('oilbtc_scenarios',JSON.stringify(scenarios))}
+
 function san(s){return Number(String(s).replace(/,/g,''))||0}
 function fmt(n,d=0){if(!isFinite(n))return'—';return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
 function fU(n){if(!isFinite(n)||isNaN(n))return'$0.00';return'$'+fmt(n,2)}
@@ -69,16 +85,101 @@ function s2u(s){return st.satsPerUSD?s/st.satsPerUSD:0}
 function clr(v){return v>=0?'var(--green)':'var(--red)'}
 function lC(l){return l>=8?'var(--red)':l>=5?'var(--yellow)':'var(--accent)'}
 function tA(t){if(!t)return'';const s=Math.floor((Date.now()-t)/1000);if(s<60)return`hace ${s}s`;if(s<3600)return`hace ${Math.floor(s/60)}m`;return`hace ${Math.floor(s/3600)}h`}
+
 async function fetchBTC(){st.fetching=true;render();try{const r=await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');const d=await r.json();const p=parseFloat(d.price);if(p>0){st.btcPrice=+p.toFixed(2);st.satsPerUSD=Math.round(S/p);st.apiStatus='ok';st.apiTime=Date.now()}}catch(e){st.apiStatus='err'}st.fetching=false;render()}
-function calc(){const{entry:e,sl,tp,margin:m,leverage:l,dir:d,feeType:ft,fundingRate:fr,fundingPeriods:fp}=st;const fee=ft==='taker'?.00075:.00025,fd=fr/100;const pos=m*l,c=e>0?pos/e:0,mU=s2u(m),pU=mU*l;const fE=pos*fee,fTP=c*tp*fee,fSL=c*sl*fee,tFTP=fE+fTP,tFSL=fE+fSL;const fPer=-d*fd*pos,fTot=fPer*fp;const pTP=(tp-e)*d*c-tFTP+fTot,pSL=(sl-e)*d*c-tFSL+fTot;const rTP=m?pTP/m:0,rSL=m?pSL/m:0,rr=pSL?Math.abs(pTP/pSL):0;const liq=l>0?e-(e/l)*d:0,liqD=e?Math.abs((liq-e)/e):0;return{pos,pU,c,mU,tFTP,tFSL,fPer,fTot,pTP,pSL,rTP,rSL,rr,liq,liqD,pTPu:s2u(pTP),pSLu:s2u(pSL)}}
-function levT(){const{entry:e,sl,tp,margin:m,dir:d,feeType:ft,fundingRate:fr,fundingPeriods:fp}=st;const fee=ft==='taker'?.00075:.00025,fd=fr/100;return Array.from({length:10},(_,i)=>{const l=i+1,pos=m*l,c=e>0?pos/e:0,pU=s2u(m)*l;const fE=pos*fee,fTP=c*tp*fee,fSL=c*sl*fee,fnd=-d*fd*pos*fp;const pTP=(tp-e)*d*c-(fE+fTP)+fnd,pSL=(sl-e)*d*c-(fE+fSL)+fnd;const rTP=m?pTP/m:0,rSL=m?pSL/m:0,liq=e-(e/l)*d;return{l,pU,pTP,pSL,rTP,rSL,liq,pTPu:s2u(pTP),pSLu:s2u(pSL)}})}
+
+function calcWith(o){
+  const e=o.entry,sl=o.sl,tp=o.tp,m=o.margin,l=o.leverage,d=o.dir;
+  const fee=o.feeType==='taker'?.00075:.00025,fd=o.fundingRate/100;
+  const pos=m*l,c=e>0?pos/e:0,spu=o.satsPerUSD||st.satsPerUSD;
+  const mU=spu?m/spu:0,pU=mU*l;
+  const fE=pos*fee,fTP=c*tp*fee,fSL=c*sl*fee,tFTP=fE+fTP,tFSL=fE+fSL;
+  const fPer=-d*fd*pos,fTot=fPer*(o.fundingPeriods||1);
+  const pTP=(tp-e)*d*c-tFTP+fTot,pSL=(sl-e)*d*c-tFSL+fTot;
+  const rTP=m?pTP/m:0,rSL=m?pSL/m:0,rr=pSL?Math.abs(pTP/pSL):0;
+  const liq=l>0?e-(e/l)*d:0,liqD=e?Math.abs((liq-e)/e):0;
+  const pTPu=spu?pTP/spu:0,pSLu=spu?pSL/spu:0;
+  return{pos,pU,c,mU,tFTP,tFSL,fPer,fTot,pTP,pSL,rTP,rSL,rr,liq,liqD,pTPu,pSLu}
+}
+
+function calc(){return calcWith(st)}
+
+function levT(){
+  const{entry:e,sl,tp,margin:m,dir:d,feeType:ft,fundingRate:fr,fundingPeriods:fp}=st;
+  const fee=ft==='taker'?.00075:.00025,fd=fr/100;
+  return Array.from({length:10},(_,i)=>{const l=i+1,pos=m*l,c=e>0?pos/e:0,pU=s2u(m)*l;const fE=pos*fee,fTP=c*tp*fee,fSL=c*sl*fee,fnd=-d*fd*pos*fp;const pTP=(tp-e)*d*c-(fE+fTP)+fnd,pSL=(sl-e)*d*c-(fE+fSL)+fnd;const rTP=m?pTP/m:0,rSL=m?pSL/m:0,liq=e-(e/l)*d;return{l,pU,pTP,pSL,rTP,rSL,liq,pTPu:s2u(pTP),pSLu:s2u(pSL)}})
+}
+
+function addScenario(){
+  if(!st.entry)return;
+  scenarios.push({id:Date.now(),name:'#'+(scenarios.length+1),entry:st.entry,sl:st.sl,tp:st.tp,margin:st.margin,leverage:st.leverage,dir:st.dir,feeType:st.feeType,fundingRate:st.fundingRate,fundingPeriods:st.fundingPeriods,satsPerUSD:st.satsPerUSD,ts:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'})});
+  saveScenarios();render();
+}
+function delScenario(id){scenarios=scenarios.filter(s=>s.id!==id);saveScenarios();render()}
+function clearScenarios(){if(confirm('¿Borrar todos los escenarios?')){scenarios=[];saveScenarios();render()}}
+function loadScenario(id){const s=scenarios.find(x=>x.id===id);if(!s)return;st.entry=s.entry;st.sl=s.sl;st.tp=s.tp;st.margin=s.margin;st.leverage=s.leverage;st.dir=s.dir;st.feeType=s.feeType;st.fundingRate=s.fundingRate;st.fundingPeriods=s.fundingPeriods;render()}
+
 function sF(lb,key,val,sub){return`<div class="field"><label>${lb} (sats) <span class="et">✎ MANUAL</span></label><div class="iw ed"><input type="text" inputmode="numeric" value="${val===0?'':fmt(val)}" placeholder="Pegar acá" data-sats="${key}" onchange="st['${key}']=san(this.value);render()" onfocus="this.value='${val||''}';this.select()" onblur="this.value=san(this.value)?fmt(san(this.value)):''"><span class="sf">sats</span></div><div class="sub">${sub}</div></div>`}
 function eN(lb,key,val,sf,step,sub,ex){return`<div class="field"><label>${lb} <span class="et">✎ MANUAL</span></label><div class="iw ed"><input type="number" value="${val}" onchange="st['${key}']=+this.value;${ex||''}render()" step="${step}"><span class="sf">${sf}</span></div>${sub?`<div class="sub">${sub}</div>`:''}</div>`}
-function render(){const c=calc(),lt=levT(),isL=st.dir===1,oilBbl=s2u(st.entry)/BBL,mU=s2u(st.margin);
+
+function renderScenarios(){
+  if(!scenarios.length)return'';
+  const calcs=scenarios.map(s=>({...s,...calcWith(s)}));
+  let bestRR=-1,bestROI=-Infinity,bestRRid=0,bestROIid=0;
+  calcs.forEach(c=>{if(c.rr>bestRR){bestRR=c.rr;bestRRid=c.id}if(c.rTP>bestROI){bestROI=c.rTP;bestROIid=c.id}});
+  return`<div class="card" style="overflow-x:auto">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<span class="ct" style="margin-bottom:0">📋 ESCENARIOS GUARDADOS (${scenarios.length})</span>
+<button class="clear-all" onclick="clearScenarios()">Borrar todos</button>
+</div>
+<table>
+<thead><tr>
+<th style="text-align:left">#</th>
+<th>Dir</th>
+<th>Entrada</th>
+<th>SL</th>
+<th>TP</th>
+<th>Margen</th>
+<th>Lev</th>
+<th>P&L TP</th>
+<th>TP $</th>
+<th>P&L SL</th>
+<th>SL $</th>
+<th>ROI TP</th>
+<th>R:R</th>
+<th>Liq</th>
+<th></th>
+</tr></thead>
+<tbody>${calcs.map(r=>{
+  const isBestRR=r.id===bestRRid&&calcs.length>1;
+  const isBestROI=r.id===bestROIid&&calcs.length>1;
+  return`<tr class="${isBestRR?'best':''}">
+<td style="text-align:left;color:var(--text-dim);white-space:nowrap">${r.name} <span style="font-size:8px;color:var(--text-dark)">${r.ts}</span>${isBestRR?'<span class="badge best-rr">MEJOR R:R</span>':''}${isBestROI&&!isBestRR?'<span class="badge best-roi">MEJOR ROI</span>':''}</td>
+<td style="color:${r.dir===1?'var(--green)':'var(--red)'};font-weight:700">${r.dir===1?'L':'S'}</td>
+<td>${fmt(r.entry)}</td>
+<td>${fmt(r.sl)}</td>
+<td>${fmt(r.tp)}</td>
+<td>${fmt(r.margin)}<br><span style="font-size:9px;color:var(--text-dark)">${fU(r.mU)}</span></td>
+<td style="font-weight:700">×${r.leverage}</td>
+<td style="color:${clr(r.pTP)};font-weight:700">${fP(Math.round(r.pTP))}</td>
+<td style="color:${clr(r.pTP)}">${fUs(r.pTPu)}</td>
+<td style="color:${clr(r.pSL)};font-weight:700">${fP(Math.round(r.pSL))}</td>
+<td style="color:${clr(r.pSL)}">${fUs(r.pSLu)}</td>
+<td style="color:${clr(r.rTP)};font-weight:700">${pct(r.rTP)}</td>
+<td style="font-weight:700;color:${r.rr>=2?'var(--green)':r.rr>=1?'var(--yellow)':'var(--red)'}">${r.rr.toFixed(2)}</td>
+<td style="color:var(--orange)">${fmt(r.liq)}</td>
+<td style="white-space:nowrap"><button class="load-btn" onclick="loadScenario(${r.id})">↩</button> <button class="del-btn" onclick="delScenario(${r.id})">✕</button></td>
+</tr>`}).join('')}</tbody></table></div>`;
+}
+
+function render(){
+const c=calc(),lt=levT(),isL=st.dir===1,oilBbl=s2u(st.entry)/BBL,mU=s2u(st.margin);
 const fLbl=st.fundingRate>0?(isL?'Pagás':'Cobrás'):st.fundingRate<0?(isL?'Cobrás':'Pagás'):'Neutro';
 const fClr=(st.fundingRate>0&&isL)||(st.fundingRate<0&&!isL)?'var(--red)':st.fundingRate===0?'var(--text-dark)':'var(--green)';
 const sC=st.apiStatus==='ok'?'ok':st.apiStatus==='err'?'err':'off';
 const sT=st.apiStatus==='ok'?`● LIVE ${tA(st.apiTime)}`:st.apiStatus==='err'?'● ERROR':'● OFFLINE';
+const canSave=st.entry>0;
+
 document.getElementById('app').innerHTML=`
 <div style="text-align:center;margin-bottom:18px">
 <div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:4px">PERPETUAL CONTRACT</div>
@@ -157,14 +258,26 @@ ${st.fundingPeriods>1?`<div style="margin-top:8px;padding:6px 10px;background:#0
 <div class="card" style="text-align:center;margin-bottom:0"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">RIESGO / RECOMPENSA</div><div style="font-size:28px;font-weight:700;color:${c.rr>=2?'var(--green)':c.rr>=1?'var(--yellow)':'var(--red)'}">${c.rr.toFixed(2)}</div></div>
 <div class="card" style="text-align:center;margin-bottom:0;border-color:var(--orange)"><div style="font-size:10px;color:var(--orange);margin-bottom:4px">⚠ LIQ. PRICE</div><div style="font-size:18px;font-weight:700;color:var(--orange)">${fmt(c.liq)} <span style="font-size:10px">sats</span></div><div style="font-size:10px;color:var(--text-dark);margin-top:2px">${fU(s2u(c.liq)/BBL)}/bbl | Dist: ${pct(c.liqD)}</div></div>
 </div>
+
+<!-- Save scenario button -->
+<div style="text-align:center;margin-bottom:14px">
+<button class="save-btn" onclick="addScenario()" ${canSave?'':'disabled'}>💾 Guardar escenario</button>
+${!canSave?'<div style="font-size:9px;color:var(--text-dark);margin-top:4px">Completá al menos la entrada para guardar</div>':''}
+</div>
+
+<!-- Scenarios table -->
+${renderScenarios()}
+
+<!-- Leverage table -->
 <div class="card" style="overflow-x:auto">
 <div style="font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:4px">COMPARATIVA POR LEVERAGE — margen fijo: ${fmt(st.margin)} sats (${fU(mU)})</div>
 <div style="font-size:9px;color:var(--text-dark);margin-bottom:10px">Tu capital × leverage = posición. Funding incluido (${st.fundingPeriods}p).</div>
 <table><thead><tr>${['Lev','Pos $','P&L TP','TP $','P&L SL','SL $','ROI TP','ROI SL','Liq'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
 <tbody>${lt.map(r=>`<tr class="${r.l===st.leverage?'ac':''}"><td style="color:#e6f1ff;font-weight:700;text-align:center">×${r.l}</td><td style="color:var(--text)">${fU(r.pU)}</td><td style="color:${clr(r.pTP)}">${fP(Math.round(r.pTP))}</td><td style="color:${clr(r.pTP)}">${fUs(r.pTPu)}</td><td style="color:${clr(r.pSL)}">${fP(Math.round(r.pSL))}</td><td style="color:${clr(r.pSL)}">${fUs(r.pSLu)}</td><td style="font-weight:700;color:${clr(r.rTP)}">${pct(r.rTP)}</td><td style="font-weight:700;color:${clr(r.rSL)}">${pct(r.rSL)}</td><td style="color:var(--orange)">${fmt(r.liq)}</td></tr>`).join('')}</tbody></table>
 </div>
-<div class="footer">OILBTC PERP CALCULATOR v7 PWA — 10 bbl/contrato — BTC via Binance API — 0 datos sensibles</div>`;
+<div class="footer">OILBTC PERP CALCULATOR v8 PWA — 10 bbl/contrato — BTC via Binance API</div>`;
 document.querySelectorAll('[data-sats]').forEach(el=>{el.addEventListener('paste',function(ev){ev.preventDefault();st[this.dataset.sats]=san(ev.clipboardData.getData('text'));render()});el.addEventListener('focus',function(){this.select()})})}
+
 render();fetchBTC();setInterval(fetchBTC,60000);
 if('serviceWorker' in navigator){const sw=`self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>e.respondWith(fetch(e.request).catch(()=>caches.match(e.request))));`;navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{})}
 </script>
